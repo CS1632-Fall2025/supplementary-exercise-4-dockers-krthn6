@@ -33,8 +33,13 @@ public class D3Test {
   public void setUp() {
     ChromeOptions options = new ChromeOptions();
     options.addArguments("--headless");
+    options.addArguments("--no-sandbox");
+    options.addArguments("--disable-dev-shm-usage");
+    options.addArguments("--remote-allow-origins=*");
+
     driver = new ChromeDriver(options);
     js = (JavascriptExecutor) driver;
+    driver.get("http://localhost:8080/");
     vars = new HashMap<String, Object>();
   }
 
@@ -46,6 +51,7 @@ public class D3Test {
   @Test
   public void tEST1LINKS() {
     driver.get("http://localhost:8080/");
+    js.executeScript("document.cookie = \"1=false\";document.cookie = \"2=false\";document.cookie = \"3=false\";");
     WebElement resetLink = driver.findElement(By.linkText("Reset"));
     String href = resetLink.getAttribute("href");
     assertTrue(href.endsWith("/reset"));
@@ -54,6 +60,8 @@ public class D3Test {
   @Test
   public void tEST2RESET() {
     driver.get("http://localhost:8080/");
+    js.executeScript("document.cookie = \"1=false\";document.cookie = \"2=false\";document.cookie = \"3=false\";");
+    js.executeScript("document.cookie = \"1=true\";document.cookie = \"2=true\";document.cookie = \"3=true\";");
     driver.findElement(By.linkText("Reset")).click();
     assertThat(driver.findElement(By.id("cat-id1")).getText(), is("ID 1. Jennyanydots"));
     assertThat(driver.findElement(By.id("cat-id2")).getText(), is("ID 2. Old Deuteronomy"));
@@ -63,6 +71,7 @@ public class D3Test {
   @Test
   public void tEST3CATALOG() {
     driver.get("http://localhost:8080/");
+    js.executeScript("document.cookie = \"1=false\";document.cookie = \"2=false\";document.cookie = \"3=false\";");
     driver.findElement(By.linkText("Catalog")).click();
     {
       List<WebElement> elements = driver.findElements(By.xpath("(//img)[2][contains(@src, 'cat2.jpg')]"));
@@ -73,6 +82,7 @@ public class D3Test {
   @Test
   public void tEST4LISTING() {
     driver.get("http://localhost:8080/");
+    js.executeScript("document.cookie = \"1=false\";document.cookie = \"2=false\";document.cookie = \"3=false\";");
     driver.findElement(By.linkText("Catalog")).click();
     WebElement listing = driver.findElement(By.id("listing"));
     List<WebElement> catItems = listing.findElements(By.tagName("li"));
@@ -84,6 +94,7 @@ public class D3Test {
   @Test
   public void tEST5RENTACAT() {
     driver.get("http://localhost:8080/");
+    js.executeScript("document.cookie = \"1=false\";document.cookie = \"2=false\";document.cookie = \"3=false\";");
     driver.findElement(By.linkText("Rent-A-Cat")).click();
     {
       List<WebElement> elements = driver.findElements(By.xpath("//button[text()='Rent']"));
@@ -98,6 +109,7 @@ public class D3Test {
   @Test
   public void tEST6RENT() {
     driver.get("http://localhost:8080/");
+    js.executeScript("document.cookie = \"1=false\";document.cookie = \"2=false\";document.cookie = \"3=false\";");
     driver.findElement(By.linkText("Rent-A-Cat")).click();
     driver.findElement(By.id("rentID")).sendKeys("1");
     driver.findElement(By.xpath("//button[text()='Rent']")).click();
@@ -110,6 +122,8 @@ public class D3Test {
   @Test
   public void tEST7RETURN() {
     driver.get("http://localhost:8080/");
+    js.executeScript("document.cookie = \"1=false\";document.cookie = \"2=false\";document.cookie = \"3=false\";");
+    js.executeScript("document.cookie = \"2=true\";");
     driver.findElement(By.linkText("Rent-A-Cat")).click();
     driver.findElement(By.id("returnID")).sendKeys("2");
     driver.findElement(By.xpath("//button[text()='Return']")).click();
@@ -122,6 +136,7 @@ public class D3Test {
   @Test
   public void tEST8FEEDACAT() {
     driver.get("http://localhost:8080/");
+    js.executeScript("document.cookie = \"1=false\";document.cookie = \"2=false\";document.cookie = \"3=false\";");
     driver.findElement(By.linkText("Feed-A-Cat")).click();
     {
       List<WebElement> elements = driver.findElements(By.xpath("//button[text()='Feed']"));
@@ -132,6 +147,7 @@ public class D3Test {
   @Test
   public void tEST9FEED() {
     driver.get("http://localhost:8080/");
+    js.executeScript("document.cookie = \"1=false\";document.cookie = \"2=false\";document.cookie = \"3=false\";");
     driver.findElement(By.linkText("Feed-A-Cat")).click();
     driver.findElement(By.id("catnips")).sendKeys("6");
     driver.findElement(By.xpath("//button[text()='Feed']")).click();
@@ -145,6 +161,7 @@ public class D3Test {
   @Test
   public void tEST10GREETACAT() {
     driver.get("http://localhost:8080/");
+    js.executeScript("document.cookie = \"1=false\";document.cookie = \"2=false\";document.cookie = \"3=false\";");
     driver.findElement(By.linkText("Greet-A-Cat")).click();
     assertThat(driver.findElement(By.xpath("//*[contains(text(),'Meow!Meow!Meow!')]")).getText(), is("Meow!Meow!Meow!"));
   }
@@ -152,6 +169,7 @@ public class D3Test {
   @Test
   public void tEST11GREETACATWITHNAME() {
     driver.get("http://localhost:8080/");
+    js.executeScript("document.cookie = \"1=false\";document.cookie = \"2=false\";document.cookie = \"3=false\";");
     driver.get("http://localhost:8080/greet-a-cat/Jennyanydots");
     assertThat(driver.findElement(By.xpath("//*[contains(text(),'Meow! from Jennyanydots.')]")).getText(), is("Meow! from Jennyanydots."));
   }
