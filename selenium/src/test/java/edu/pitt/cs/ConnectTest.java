@@ -13,6 +13,8 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.Cookie;
+
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ConnectTest {
@@ -23,17 +25,14 @@ public class ConnectTest {
   public void setUp() {
     ChromeOptions options = new ChromeOptions();
     options.addArguments("--headless");
-    options.addArguments("--disable-web-security");
-    options.addArguments("--disable-site-isolation-trials");
-    options.addArguments("--disable-features=SameSiteByDefaultCookies");
-    options.addArguments("--disable-features=CookiesWithoutSameSiteMustBeSecure");
-    options.addArguments("--no-sandbox");
-    options.addArguments("--disable-dev-shm-usage");
-    options.addArguments("--remote-allow-origins=*");
-
     driver = new ChromeDriver(options);
     js = (JavascriptExecutor) driver;
     vars = new HashMap<String, Object>();
+    driver.get("http://localhost:8080/");
+
+    driver.manage().addCookie(new Cookie("1", "false"));
+    driver.manage().addCookie(new Cookie("2", "false"));
+    driver.manage().addCookie(new Cookie("3", "false"));
   }
   @After
   public void tearDown() {

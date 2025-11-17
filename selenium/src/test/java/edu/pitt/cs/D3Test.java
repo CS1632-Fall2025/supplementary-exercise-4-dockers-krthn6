@@ -15,6 +15,7 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Cookie;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -22,6 +23,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class D3Test {
@@ -33,9 +35,15 @@ public class D3Test {
   public void setUp() {
     ChromeOptions options = new ChromeOptions();
     options.addArguments("--headless");
+
     driver = new ChromeDriver(options);
     js = (JavascriptExecutor) driver;
     vars = new HashMap<String, Object>();
+    driver.get("http://localhost:8080/");
+
+    driver.manage().addCookie(new Cookie("1", "false"));
+    driver.manage().addCookie(new Cookie("2", "false"));
+    driver.manage().addCookie(new Cookie("3", "false"));
   }
 
   @After
