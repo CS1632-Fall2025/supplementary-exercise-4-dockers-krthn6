@@ -13,8 +13,6 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.Cookie;
-
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ConnectTest {
@@ -28,11 +26,6 @@ public class ConnectTest {
     driver = new ChromeDriver(options);
     js = (JavascriptExecutor) driver;
     vars = new HashMap<String, Object>();
-    driver.get("http://localhost:8080/");
-
-    driver.manage().addCookie(new Cookie("1", "false"));
-    driver.manage().addCookie(new Cookie("2", "false"));
-    driver.manage().addCookie(new Cookie("3", "false"));
   }
   @After
   public void tearDown() {
