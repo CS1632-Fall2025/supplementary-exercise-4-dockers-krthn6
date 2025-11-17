@@ -35,6 +35,7 @@ public class D3Test {
     ChromeOptions options = new ChromeOptions();
     options.addArguments("--headless");
     driver = new ChromeDriver(options);
+    driver.get("http://localhost:8080"); 
     js = (JavascriptExecutor) driver;
     vars = new HashMap<String, Object>();
   }
