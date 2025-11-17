@@ -13,6 +13,8 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.junit.runners.MethodSorters;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
@@ -31,6 +33,9 @@ public class D3Test {
 
   @Before
   public void setUp() {
+    ChromeOptions options = new ChromeOptions();
+    options.addArguments("--headless");
+    driver = new ChromeDriver(options);
     driver = new ChromeDriver();
     js = (JavascriptExecutor) driver;
     vars = new HashMap<String, Object>();
