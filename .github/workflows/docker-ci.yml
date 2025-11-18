@@ -40,16 +40,8 @@ jobs:
       - name: Launch Web Service
         run: docker compose up -d
 
-      - name: Install curl
-        run: sudo apt-get update && sudo apt-get install -y curl
-
-
-      - name: Make wait script executable
-        run: chmod +x wait-for-webserver.sh
-
-
       - name: Wait for webserver
-        run: ./wait-for-webserver.sh
+        run: sh ./wait-for-webserver.sh
 
       - name: Run Selenium Tests
         run: cd selenium && mvn test
